@@ -25,21 +25,26 @@ namespace MemoryGame.ViewModels
 
         private void NavigatePlay()
         {
-            if (OnNavigationRequested == null)
-            {
-                return;
-            }
-            OnNavigationRequested.Invoke(typeof(PlayViewModel));
+            Navigate(typeof(PlayViewModel));
         }
 
         private void NavigateScores()
         {
-            OnNavigationRequested.Invoke(typeof(ScoresViewModel));
+            Navigate(typeof(ScoresViewModel));
         }
 
         private void NavigateAbout()
         {
-            OnNavigationRequested.Invoke(typeof(AboutViewModel));
+            Navigate(typeof(AboutViewModel));
+        }
+
+        private void Navigate(Type type)
+        {
+            if (OnNavigationRequested == null)
+            {
+                return;
+            }
+            OnNavigationRequested.Invoke(type);
         }
     }
 }

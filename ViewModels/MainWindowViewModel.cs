@@ -61,14 +61,7 @@ namespace MemoryGame.ViewModels
             {
                 CurrentPage = Pages[selectedPageIndex];
             }
-            if (type == DefaultNavigationPageType)
-            {
-                NavigationPreviousVisibility = false;
-            }
-            else
-            {
-                NavigationPreviousVisibility = true;
-            }
+            NavigationPreviousVisibility = type != DefaultNavigationPageType;
         }
     }
 }
