@@ -14,7 +14,11 @@
     </Design.DataContext>
 
 	<Grid RowDefinitions="*,Auto" Margin="10">
-		<TransitioningContentControl Content="{Binding CurrentPage}"/>
+		<TransitioningContentControl Content="{Binding CurrentPage}">
+			<TransitioningContentControl.PageTransition>
+				<PageSlide Orientation="Vertical" Duration="0:00:00.25"/>
+			</TransitioningContentControl.PageTransition>
+		</TransitioningContentControl>
 		<StackPanel Grid.Row="1" Orientation="Horizontal"
 					HorizontalAlignment="Right"
 					Spacing="5">
