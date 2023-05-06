@@ -10,8 +10,29 @@
 	<Design.DataContext>
 		<vm:ScoresViewModel/>
 	</Design.DataContext>
+	
+	<Grid RowDefinitions="auto, auto, *">
+		<Label Grid.Row="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+			   Content="S C O R E S" FontSize="54"/>
 
-	<Grid>
-		<Label Content="{Binding WelcomeString}"/>
+		<Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,20">
+			<Label Grid.Column="0" FontWeight="Bold" Content="Player name" HorizontalAlignment="Center"/>
+			<Label Grid.Column="1" FontWeight="Bold" Content="Date" HorizontalAlignment="Center"/>
+			<Label Grid.Column="2" FontWeight="Bold" Content="Score" HorizontalAlignment="Center"/>
+		</Grid>
+		<ItemsRepeater Items="{Binding ScoresList}" 
+					   Grid.Row="2" 
+					   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+					   MinHeight="500">
+			<ItemsRepeater.ItemTemplate>
+				<DataTemplate>
+					<Grid ColumnDefinitions="*,*,*" Margin="0,10">
+						<Label Grid.Column="0" Content="{Binding PlayerName}" HorizontalAlignment="Center"/>
+						<Label Grid.Column="1" Content="{Binding Date}" HorizontalAlignment="Center"/>
+						<Label Grid.Column="2" Content="{Binding TimeScore}" HorizontalAlignment="Center"/>
+					</Grid>
+				</DataTemplate>
+			</ItemsRepeater.ItemTemplate>
+		</ItemsRepeater>
 	</Grid>
 </UserControl>
