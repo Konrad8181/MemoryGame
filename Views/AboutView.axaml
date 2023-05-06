@@ -11,7 +11,12 @@
 		<vm:AboutViewModel/>
 	</Design.DataContext>
 
-	<Grid>
-		<Label Content="{Binding WelcomeString}"/>
-	</Grid>
+	<StackPanel>
+		<Label HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+			   Content="A B O U T" FontSize="54"/>
+		<TextBlock Margin="50,20" TextWrapping="Wrap" FontSize="26"
+				   Text="The game starts with all the cards face down and player take turns to turn over two cards. If the two cards have the same picture, then player can keep the cards, otherwise he turn the cards face down again. Game ends when all cards are turned over."/>
+		<TextBlock Margin="50,30" TextWrapping="Wrap" FontSize="26"
+				   Text="In this version 10 pairs of cards are on the play. Overall number of pairs is larger.  Score is the time. Good luck and have fun."/>
+	</StackPanel>
 </UserControl>
