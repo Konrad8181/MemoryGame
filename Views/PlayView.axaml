@@ -11,7 +11,7 @@
 		<vm:PlayViewModel/>
 	</Design.DataContext>
 
-	<Grid>
-		<Label Content="{Binding WelcomeString}"/>
-	</Grid>
+	<Grid Name="CardsGird" 
+		  ColumnDefinitions="*,*,*,*,*"
+		  RowDefinitions="*,*,*,*"/>
 </UserControl>
