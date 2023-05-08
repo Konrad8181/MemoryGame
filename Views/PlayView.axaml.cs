@@ -2,8 +2,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Shapes;
 using MemoryGame.ViewModels;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 
 namespace MemoryGame.Views
 {
