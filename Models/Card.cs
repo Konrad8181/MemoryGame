@@ -8,6 +8,8 @@ namespace MemoryGame.Models
 {
     public class Card
     {
+        public  Guid Guid { get;}
+
         public Image Image { get; set; }
 
         public (int x, int y) Position{ get; set; }
@@ -24,6 +26,7 @@ namespace MemoryGame.Models
 
         public Card(int x, int y, Click click, int tag, string imagePath)
         {
+            Guid = Guid.NewGuid();
             Position = new(x, y);
             OnClick = click;
             Tag = tag;
@@ -32,12 +35,6 @@ namespace MemoryGame.Models
             HasReversedPair = false;
             Random rand = new Random();
             Brush = new SolidColorBrush(Color.FromRgb((byte)rand.Next(0, 256), (byte)rand.Next(0, 256), (byte)rand.Next(0, 256)));
-            
-        }
-
-        public void HandleClick(object sender, EventArgs e)
-        {
-            Trace.WriteLine($"Card at position X={Position.x}, Y={Position.y} has been clicked.");
         }
     }
 }

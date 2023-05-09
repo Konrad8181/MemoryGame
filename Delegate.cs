@@ -1,7 +1,9 @@
-﻿namespace MemoryGame
+﻿using MemoryGame.Models;
+
+namespace MemoryGame
 {
     public class Delegate
     {
-        public delegate void Click(int x, int y);
+        public delegate void Click(Card card);
     }
 }

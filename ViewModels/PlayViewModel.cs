@@ -1,6 +1,7 @@
 ﻿using MemoryGame.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace MemoryGame.ViewModels
@@ -43,8 +44,10 @@ namespace MemoryGame.ViewModels
             }
         }
 
-        private void HandleClick(int x, int y)
+        public void HandleClick(Card card)
         {
+            card.IsReversed = !card.IsReversed;
+            Trace.WriteLine($"Card at position X={card.Position.x}, Y={card.Position.y} has been clicked.");
         }
     }
 }
