@@ -2,6 +2,6 @@
 {
     public class AboutViewModel : ViewModelBase
     {
-        public string WelcomeString => "Welcome to About VM!";
+        public string WelcomeString => "Hello from about page";
     }
 }

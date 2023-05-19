@@ -4,6 +4,6 @@ namespace MemoryGame
 {
     public class Delegate
     {
-        public delegate void Click(Card card);
+        public delegate void Click(Card cardy);
     }
 }

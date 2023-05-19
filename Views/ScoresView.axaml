@@ -2,36 +2,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:vm="using:MemoryGame.ViewModels"
-			 x:DataType="vm:ScoresViewModel"
+             mc:Ignorable="d" d:DesignWidth="800"
+             xmlns:vm="using:MemoryGame.ViewModels"
+             x:DataType="vm:ScoresViewModel" d:DesignHeight="450"
              x:Class="MemoryGame.Views.ScoresView">
-	
-	<Design.DataContext>
-		<vm:ScoresViewModel/>
-	</Design.DataContext>
-	
-	<Grid RowDefinitions="auto, auto, *" Margin="10">
-		<Label Grid.Row="0" Margin="0,10"
-			   HorizontalAlignment="Center" 
-			   HorizontalContentAlignment="Center"
-			   Content="S C O R E S" FontSize="54"/>
 
-		<Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,10">
-			<Label Grid.Column="0" FontWeight="Bold" Content="Player name" HorizontalAlignment="Center" FontSize="24"/>
-			<Label Grid.Column="1" FontWeight="Bold" Content="Date" HorizontalAlignment="Center" FontSize="24"/>
-			<Label Grid.Column="2" FontWeight="Bold" Content="Score" HorizontalAlignment="Center" FontSize="24"/>
-		</Grid>
-		<ListBox Items="{Binding ScoresList}"  Grid.Row="2" Margin="0,10">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<Grid ColumnDefinitions="*,*,*" >
-						<Label Grid.Column="0" Content="{Binding PlayerName}" HorizontalAlignment="Center" FontSize="22"/>
-						<Label Grid.Column="1" Content="{Binding Date}" HorizontalAlignment="Center" FontSize="22"/>
-						<Label Grid.Column="2" Content="{Binding TimeScore}" HorizontalAlignment="Center" FontSize="22"/>
-					</Grid>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-	</Grid>
+  <Design.DataContext>
+    <vm:ScoresViewModel/>
+  </Design.DataContext>
+
+  <Grid RowDefinitions="Auto, Auto, *" Margin="10">
+    <Label HorizontalAlignment="Center" Content="S C O R E S" FontSize="54" Margin="0,10"/>
+    <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,10">
+      <Label Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" Content="Player name" FontSize="24"/>
+      <Label Grid.Column="1" HorizontalAlignment="Center" FontWeight="Bold" Content="Date" FontSize="24"/>
+      <Label Grid.Column="2" HorizontalAlignment="Center" FontWeight="Bold" Content="Score" FontSize="24"/>
+    </Grid>
+    <ListBox Grid.Row="2" Items="{Binding ScoresList}" Margin="0,10">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Grid ColumnDefinitions="*,*,*">
+            <Label Grid.Column="0" HorizontalAlignment="Center" Content="{Binding PlayerName}" FontSize="22"/>
+            <Label Grid.Column="1" HorizontalAlignment="Center" Content="{Binding Date}" FontSize="22"/>
+            <Label Grid.Column="2" HorizontalAlignment="Center" Content="{Binding TimeScore}" FontSize="22"/>
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </Grid>
 </UserControl>

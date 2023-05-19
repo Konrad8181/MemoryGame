@@ -2,21 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:vm="using:MemoryGame.ViewModels"
-			 x:DataType="vm:AboutViewModel"
+             mc:Ignorable="d" d:DesignWidth="800"
+             xmlns:vm="using:MemoryGame.ViewModels"
+             x:DataType="vm:AboutViewModel" d:DesignHeight="450"
              x:Class="MemoryGame.Views.AboutView">
-	
-	<Design.DataContext>
-		<vm:AboutViewModel/>
-	</Design.DataContext>
 
-	<StackPanel>
-		<Label HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-			   Content="A B O U T" FontSize="54"/>
-		<TextBlock Margin="50,20" TextWrapping="Wrap" FontSize="26"
-				   Text="The game starts with all the cards face down and player take turns to turn over two cards. If the two cards have the same picture, then player can keep the cards, otherwise he turn the cards face down again. Game ends when all cards are turned over."/>
-		<TextBlock Margin="50,30" TextWrapping="Wrap" FontSize="26"
-				   Text="In this version 10 pairs of cards are on the play. Overall number of pairs is larger.  Score is the time. Good luck and have fun."/>
-	</StackPanel>
+  <Design.DataContext>
+    <vm:AboutViewModel/>
+  </Design.DataContext>
+  
+  <Grid RowDefinitions="Auto, *">
+    <Label Content="A B O U T" FontSize="54" 
+           HorizontalAlignment="Center" Margin="0,10"/>
+    <TextBlock Grid.Row="1" FontSize="22" TextWrapping="Wrap" Margin="50"
+               Text="Memory Game for one person is a mental exercise in which the player must memorize the location of pairs of cards facing down and then flip them over to match them. The objective is to find all matching pairs in as few attempts as possible. This game improves cognitive skills such as concentration, attention, and memory retention."/>
+  </Grid>
 </UserControl>

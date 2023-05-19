@@ -7,9 +7,9 @@ namespace MemoryGame.ViewModels
     public class MenuViewModel : ViewModelBase
     {
         public ICommand NavigatePlayCommand { get; }
-        
+
         public ICommand NavigateScoresCommand { get; }
-        
+
         public ICommand NavigateAboutCommand { get; }
 
         public delegate void NavigationRequested(Type type);

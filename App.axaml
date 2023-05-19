@@ -2,11 +2,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:MemoryGame"
              x:Class="MemoryGame.App">
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
 
-    <Application.Styles>
-        <FluentTheme Mode="Light"/>
-    </Application.Styles>
+  <Application.Resources>
+    <ImageBrush x:Key="apple" Source="Assets\apple.png" />
+    <ImageBrush x:Key="bananaRasberry" Source="Assets\bananaRasberry.png" />
+    <ImageBrush x:Key="cherry" Source="Assets\cherry.png" />
+    <ImageBrush x:Key="kiwi" Source="Assets\kiwi.png" />
+    <ImageBrush x:Key="lemon" Source="Assets\lemon.png" />
+    <ImageBrush x:Key="orangle" Source="Assets\orangle.png" />
+    <ImageBrush x:Key="peach" Source="Assets\peach.png" />
+    <ImageBrush x:Key="pear" Source="Assets\pear.png" />
+    <ImageBrush x:Key="strawberry" Source="Assets\strawberry.png" />
+    <ImageBrush x:Key="watermelon" Source="Assets\watermelon.png" />
+  </Application.Resources>
+  
+  <Application.Styles>
+    <FluentTheme Mode="Light"/>
+  </Application.Styles>
 </Application>

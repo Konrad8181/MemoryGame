@@ -9,7 +9,7 @@ namespace MemoryGame.ViewModels
     {
         private readonly Type DefaultNavigationPageType = typeof(MenuViewModel);
 
-        private readonly List<ReactiveObject> Pages = new ();
+        private readonly List<ReactiveObject> Pages = new();
 
         private ReactiveObject _currentPage;
 
@@ -44,14 +44,14 @@ namespace MemoryGame.ViewModels
         private void InitializePages()
         {
             var menuViewModel = new MenuViewModel();
-            var scoresViewModel = new ScoresViewModel();   
-            var playViewModel = new PlayViewModel();   
             var aboutViewModel = new AboutViewModel();
+            var scoresViewModel = new ScoresViewModel();
+            var playViewModel = new PlayViewModel();
             menuViewModel.OnNavigationRequested += NavigatePage;
             Pages.Add(aboutViewModel);
+            Pages.Add(menuViewModel);
             Pages.Add(scoresViewModel);
             Pages.Add(playViewModel);
-            Pages.Add(menuViewModel);
         }
 
         public void NavigatePage(Type type)
