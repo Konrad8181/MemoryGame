@@ -10,13 +10,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace MemoryGame.ViewModels
 {
     public class PlayViewModel : ViewModelBase
     {
         private bool _reverseNext = false;
+
+        private DateTime _playGameStartTime;
+
+        private Score? _score;
 
         private List<int> _availableTags;
 
@@ -26,7 +29,7 @@ namespace MemoryGame.ViewModels
 
         public int Columns { get; set; } = 4;
 
-        public List<Card> Cards { get; }
+        public List<Card> Cards { get; private set; }
 
         public int CompletedPairs = 0;
 
@@ -34,24 +37,36 @@ namespace MemoryGame.ViewModels
 
         public Interaction<GameEndViewModel, Score?> ShowDialog { get; }
 
-        public string CompletedPairsString
+        public delegate void NavigateScores(Score score);
+
+        public event NavigateScores OnNaviagteScores;
+
+        public string CompletedPairsString 
         {
             get => $"Completed pairs: {CompletedPairs} / {(Rows * Columns) / 2}";
         }
 
         public PlayViewModel()
         {
-            Cards = new List<Card>();
             SanityCheck();
-            LoadAssets(); 
+            LoadAssets();
             ShowDialog = new Interaction<GameEndViewModel, Score?>();
 
             EndGameCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 var store = new GameEndViewModel();
-                var result = await ShowDialog.Handle(store);
+                _score = await ShowDialog.Handle(store);
+                _score.TimeScore = DateTime.Now.Subtract(_playGameStartTime);
+                _score.Date = DateTime.Now;
+                OnNaviagteScores?.Invoke(_score);
             });
+        }
 
+        public void ReshuffleCards()
+        {
+            Cards = new List<Card>();
+            CompletedPairs = 0;
+            this.RaisePropertyChanged(nameof(CompletedPairsString));
             GenerateRandomTags();
             CreateCards();
             AssignImage();
@@ -76,6 +91,15 @@ namespace MemoryGame.ViewModels
                 {
                     lifetime.Shutdown();
                 }
+            }
+        }
+
+        private void ClearPairs()
+        {
+            foreach (var card in Cards)
+            {
+                card.HasReveredPair = false;
+                card.IsReversed = false;
             }
         }
 
@@ -181,6 +205,7 @@ namespace MemoryGame.ViewModels
             {
                 card.Image = Images[card.Tag];
             }
+            _playGameStartTime =DateTime.Now;
         }
     }
 }

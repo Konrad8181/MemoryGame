@@ -1,6 +1,10 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Controls.ApplicationLifetimes;
+using MemoryGame.Models;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reactive;
 using System.Windows.Input;
 
 namespace MemoryGame.ViewModels
@@ -8,6 +12,8 @@ namespace MemoryGame.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly Type DefaultNavigationPageType = typeof(MenuViewModel);
+
+        private readonly Type ScoresNavigationPageType = typeof(ScoresViewModel);
 
         private readonly List<ReactiveObject> Pages = new();
 
@@ -36,9 +42,24 @@ namespace MemoryGame.ViewModels
             _currentPage = Pages[Pages.FindIndex(x => x.GetType() == DefaultNavigationPageType)];
         }
 
+        public void HandleClosing()
+        {
+
+        }
+
         private void NavigateMenuPage()
         {
             NavigatePage(DefaultNavigationPageType);
+        }
+
+        private void NavigateScoresPage(Score score)
+        {
+            var scorePage = Pages.Where(x => x.GetType() == ScoresNavigationPageType).FirstOrDefault();
+            if (scorePage != null) 
+            {
+                (scorePage as ScoresViewModel).UpdateScoresList(score);
+            }
+            NavigatePage(ScoresNavigationPageType);
         }
 
         private void InitializePages()
@@ -47,7 +68,13 @@ namespace MemoryGame.ViewModels
             var aboutViewModel = new AboutViewModel();
             var scoresViewModel = new ScoresViewModel();
             var playViewModel = new PlayViewModel();
+            playViewModel.OnNaviagteScores += NavigateScoresPage;
             menuViewModel.OnNavigationRequested += NavigatePage;
+
+            ((IClassicDesktopStyleApplicationLifetime)Avalonia.Application.Current.ApplicationLifetime).ShutdownRequested += delegate (object? sender, ShutdownRequestedEventArgs e)
+            {
+                scoresViewModel.Serialize();
+            };
             Pages.Add(aboutViewModel);
             Pages.Add(menuViewModel);
             Pages.Add(scoresViewModel);
@@ -59,7 +86,12 @@ namespace MemoryGame.ViewModels
             var selectedPageIndex = Pages.FindIndex(x => x.GetType() == type);
             if (selectedPageIndex != -1)
             {
-                CurrentPage = Pages[selectedPageIndex];
+                var newPage = Pages[selectedPageIndex];
+                if (newPage.GetType() == typeof(PlayViewModel))
+                {
+                    (newPage as PlayViewModel).ReshuffleCards();
+                }
+                CurrentPage = newPage;
             }
             NavigationPreviousVisibility = type != DefaultNavigationPageType;
         }

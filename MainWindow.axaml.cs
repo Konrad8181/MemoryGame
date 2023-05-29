@@ -1,4 +1,7 @@
 using Avalonia.Controls;
+using Avalonia.ReactiveUI;
+using MemoryGame.ViewModels;
+using ReactiveUI;
 
 namespace MemoryGame
 {

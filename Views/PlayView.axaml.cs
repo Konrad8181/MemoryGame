@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace MemoryGame.Views
 {
-    public partial class PlayView : ReactiveUserControl<PlayViewModel>
+    public partial class PlayView :  ReactiveUserControl<PlayViewModel>
     {
+        private const int Marigin = 5;
+
         private PlayViewModel _playViewModel;
 
         public PlayView()
@@ -20,6 +22,7 @@ namespace MemoryGame.Views
             InitializeComponent();
             DrawCards();
             this.WhenActivated(d => d(ViewModel!.ShowDialog.RegisterHandler(DoShowDialogAsync)));
+
         }
 
         private async Task DoShowDialogAsync(InteractionContext<GameEndViewModel, Score?> interaction)
@@ -36,7 +39,6 @@ namespace MemoryGame.Views
 
         private void DrawCards()
         {
-            var marigin = 5;
             if (App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 if (desktop.MainWindow.DataContext is MainWindowViewModel mainWindowViewModel)
@@ -44,6 +46,7 @@ namespace MemoryGame.Views
                     if (mainWindowViewModel.CurrentPage is PlayViewModel playViewModel)
                     {
                         _playViewModel = playViewModel;
+                        ClearGrid();
                         CreateGridDefinitions();
 
                         foreach (var card in playViewModel.Cards)
@@ -55,7 +58,7 @@ namespace MemoryGame.Views
                                 Fill = card.Brush,
                                 Stroke = card.Brush,
                                 StrokeThickness = 2,
-                                Margin = new Avalonia.Thickness(marigin),
+                                Margin = new Avalonia.Thickness(Marigin),
                                 IsVisible = !card.IsReversed,
                                 Tag = card.Guid
                             };
@@ -72,7 +75,7 @@ namespace MemoryGame.Views
                                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                                 Source = card.Image,
                                 Tag = card.Guid,
-                                Margin = new Avalonia.Thickness(marigin + 2)
+                                Margin = new Avalonia.Thickness(Marigin + 2)
                             };
 
                             textBlock.SetValue(Grid.RowProperty, card.Position.x);
@@ -93,6 +96,13 @@ namespace MemoryGame.Views
                     }
                 }
             }
+        }
+
+        private void ClearGrid()
+        {
+            CardsGrid.Children.Clear();
+            CardsGrid.RowDefinitions.Clear();
+            CardsGrid.ColumnDefinitions.Clear();
         }
 
         private void CreateGridDefinitions()

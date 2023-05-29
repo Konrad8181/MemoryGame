@@ -3,11 +3,14 @@ using System.Collections.ObjectModel;
 using MemoryGame.Models;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace MemoryGame.ViewModels
 {
     public class ScoresViewModel : ViewModelBase
     {
+        private List<Score> _scores;
+
         private ObservableCollection<Score> _scoresList;
        
         public ObservableCollection<Score> ScoresList
@@ -18,28 +21,44 @@ namespace MemoryGame.ViewModels
 
         public ScoresViewModel()
         {
-            var scores = new List<Score>()
+            _scores = new List<Score>();
+            ReadFromFile();
+        }
+
+        public void Serialize()
+        {
+            var gameScoreSaver = new GameScoresSaver();
+            try
             {
-                new Score()
+                if (_scores.Any())
                 {
-                    PlayerName="Player1",
-                    Date = DateTime.Now,
-                    TimeScore = new TimeSpan(0,0,1)
-                },
-                new Score()
-                {
-                    PlayerName="Player2",
-                    Date = DateTime.Now,
-                    TimeScore = new TimeSpan(4,2,0)
-                },
-                new Score()
-                {
-                    PlayerName="Player2",
-                    Date = DateTime.Now,
-                    TimeScore = new TimeSpan(0,9,1)
+                    gameScoreSaver.Serialize(_scores);
                 }
-            };
-            _scoresList = new ObservableCollection<Score>(scores);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void UpdateScoresList(Score score)
+        {
+            _scores.Add(score);
+            _scoresList = new ObservableCollection<Score>(_scores);
+        }
+
+        private void ReadFromFile()
+        {
+            var gameScoreSaver = new GameScoresSaver();
+            List<Score>? tryScores;
+            try
+            {
+                tryScores = gameScoreSaver.Desrialize();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            ScoresList = new ObservableCollection<Score>(tryScores);
         }
     }
 }
