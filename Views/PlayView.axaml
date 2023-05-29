@@ -8,5 +8,8 @@
              x:Class="MemoryGame.Views.PlayView">
 
 
-  <Grid Name="CardsGrid"/>
+	<Grid RowDefinitions="auto,*">
+		<Label HorizontalAlignment="Center" Foreground="Black" FontSize="32" Content="{Binding  CompletedPairsString, Mode=TwoWay}"/>
+		<Grid Grid.Row="1" Name="CardsGrid"/>
+	</Grid>
 </UserControl>

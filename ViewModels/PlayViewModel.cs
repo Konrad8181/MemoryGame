@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using MemoryGame.Models;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,6 +24,13 @@ namespace MemoryGame.ViewModels
         public int Columns { get; set; } = 4;
 
         public List<Card> Cards { get; }
+
+        public int CompletedPairs = 0;
+
+        public string CompletedPairsString
+        {
+            get => $"Completed pairs: {CompletedPairs} / {(Rows * Columns) / 2}";
+        }
 
         public PlayViewModel()
         {
@@ -131,6 +139,8 @@ namespace MemoryGame.ViewModels
                     {
                         pair.HasReveredPair = true;
                     }
+                    CompletedPairs++;
+                    this.RaisePropertyChanged(nameof(CompletedPairsString));
                 }
                 else
                 {
