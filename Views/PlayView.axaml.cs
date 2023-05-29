@@ -1,14 +1,17 @@
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Shapes;
+using Avalonia.ReactiveUI;
 using MemoryGame.Models;
 using MemoryGame.ViewModels;
+using ReactiveUI;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MemoryGame.Views
 {
-    public partial class PlayView : UserControl
+    public partial class PlayView : ReactiveUserControl<PlayViewModel>
     {
         private PlayViewModel _playViewModel;
 
@@ -16,6 +19,19 @@ namespace MemoryGame.Views
         {
             InitializeComponent();
             DrawCards();
+            this.WhenActivated(d => d(ViewModel!.ShowDialog.RegisterHandler(DoShowDialogAsync)));
+        }
+
+        private async Task DoShowDialogAsync(InteractionContext<GameEndViewModel, Score?> interaction)
+        {
+            var dialog = new GameEndWindowView();
+            dialog.DataContext = interaction.Input;
+
+            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var result = await dialog.ShowDialog<Score?>(desktop.MainWindow);
+                interaction.SetOutput(result);
+            }
         }
 
         private void DrawCards()

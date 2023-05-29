@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="400" Height="250"
+        x:Class="MemoryGame.Views.GameEndWindowView"
+        WindowStartupLocation="CenterOwner"
+        Title="GameEndWindowView"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaTitleBarHeightHint="0"
+        ExtendClientAreaToDecorationsHint="True">
+  <Panel>
+    <ExperimentalAcrylicBorder IsHitTestVisible="False">
+      <ExperimentalAcrylicBorder.Material>
+        <ExperimentalAcrylicMaterial
+            BackgroundSource="Digger"
+            TintColor="White"
+            TintOpacity="1"
+            MaterialOpacity="0.85" />
+      </ExperimentalAcrylicBorder.Material>
+    </ExperimentalAcrylicBorder>
+
+    <StackPanel VerticalAlignment="Center">
+      <Label FontSize="42" HorizontalAlignment="Center" Content="You won!"/>
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+        <Label VerticalAlignment="Center" Content="Nickname"/>
+        <TextBox VerticalAlignment="Center" Text="{Binding Nickname, Mode=TwoWay}" MinWidth="100" IsUndoEnabled="True"/>
+      </StackPanel>
+      <Button IsVisible="{Binding SubmitVisibility}" HorizontalAlignment="Right" Margin="20,0" Command="{Binding EndGameCommand}" Content="Submit"/>
+    </StackPanel>
+  </Panel>
+</Window>

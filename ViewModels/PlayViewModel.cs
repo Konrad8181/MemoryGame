@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Windows.Input;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace MemoryGame.ViewModels
 {
@@ -27,6 +30,10 @@ namespace MemoryGame.ViewModels
 
         public int CompletedPairs = 0;
 
+        public ICommand EndGameCommand { get; }
+
+        public Interaction<GameEndViewModel, Score?> ShowDialog { get; }
+
         public string CompletedPairsString
         {
             get => $"Completed pairs: {CompletedPairs} / {(Rows * Columns) / 2}";
@@ -36,7 +43,15 @@ namespace MemoryGame.ViewModels
         {
             Cards = new List<Card>();
             SanityCheck();
-            LoadAssets();
+            LoadAssets(); 
+            ShowDialog = new Interaction<GameEndViewModel, Score?>();
+
+            EndGameCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                var store = new GameEndViewModel();
+                var result = await ShowDialog.Handle(store);
+            });
+
             GenerateRandomTags();
             CreateCards();
             AssignImage();
@@ -122,6 +137,7 @@ namespace MemoryGame.ViewModels
         {
             if (Cards.Where(r => r.HasReveredPair).Count() == (Columns * Rows))
             {
+                EndGameCommand.Execute(null);
                 Trace.WriteLine("Game over!");
             }
         }
