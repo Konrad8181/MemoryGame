@@ -58,6 +58,7 @@ namespace MemoryGame.ViewModels
             {
                 return;
             }
+            _scores = new List<Score>(tryScores);
             ScoresList = new ObservableCollection<Score>(tryScores);
         }
     }

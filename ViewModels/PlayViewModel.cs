@@ -94,15 +94,6 @@ namespace MemoryGame.ViewModels
             }
         }
 
-        private void ClearPairs()
-        {
-            foreach (var card in Cards)
-            {
-                card.HasReveredPair = false;
-                card.IsReversed = false;
-            }
-        }
-
         private void LoadAssets()
         {
             Images = new List<IBitmap>();
